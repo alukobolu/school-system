@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+Update Results
+{% endblock title %}
+
+
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ formset.management_form}}
+
+  <table id="studenttable" class="table table-sm">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Assignment Score</th>
+        <th>Test 1 Score</th>
+        <th>Test 2 Score</th>
+        <th>Test 3 Score</th>
+        <th>Exam Score</th>
+        <th>Total</th>
+        <th>Remarks</th>
+        <th>Class</th>
+        <input type="submit" class="btn btn-success" value="Save & Calculate All">
+      </tr>
+    </thead>
+    <tbody>
+      {% for form in formset %}
+      {{ form.id}}
+        <tr>
+          <td>{{forloop.counter }}</td>
+          <td>{{form.instance.student }}</td>
+          <td>{{form.instance.subject}}</td>
+          <td style="width: 8%;">{{form.assignment_score | add_class:"form-control form-control-sm"}}</td>
+          <td style="width: 8%;">{{form.test1_score | add_class:"form-control form-control-sm"}}</td>
+          <td style="width: 8%;">{{form.test2_score | add_class:"form-control form-control-sm"}}</td>
+          <td style="width: 8%;">{{form.test3_score | add_class:"form-control form-control-sm"}}</td>
+          <td style="width: 8%;">{{form.exam_score | add_class:"form-control form-control-sm"}}</td>
+          <td style="width: 8%;">{{form.instance.total_score}}</td>
+          <td>{{form.remarks | add_class:"form-control form-control-sm"}}</td>
+          <td>{{form.instance.current_class}}</td>
+          {% comment %} <td><input type="submit" class="btn btn-success" value="Save"></td> {% endcomment %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <input type="submit" class="btn btn-success" value="Save All">
+  </form>
+
+{% endblock content %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block fullcard %}
+
+  <div class="card">
+    <div class="card-header">
+      <form method="GET">
+        {% csrf_token %}
+        {% if student_classes != "no" %}
+        <div class="form-group row">
+          <label class="col-2" for="id_session"><label for="result_class_id">Class:</label></label>
+          <div class="col">
+            <select name="result_class_id" class="form-control"  id="result_class_id">
+              <option value="" selected="">---------</option>
+              {% for student_class in student_classes %}
+              <option value="{{student_class.id}}">{{student_class.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        {% endif %}
+        <div class="form-group row">
+          <label class="col-2" for="id_session"><label for="id_session">Session:</label></label>
+          <div class="col">
+            <select name="session" class="form-control" id="id_session">
+              <option value="" selected="">---------</option>
+              {% for session in all_session %}
+              <option value="{{session.id}}">{{session.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2" for="id_term"><label for="id_term">Term:</label></label>
+          <div class="col">
+            <select name="term" class="form-control" id="id_term">
+              <option value="">---------</option>
+              {% for term in all_term %}
+              <option value="{{term.id}}">{{term.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">View</button>
+      </form>
+    </div>
+  </div>
+
+  {% for key, result in results.items %}
+    <div class="card">
+      <div class="card-header">
+        {{result.student}}
+          <a style="position: absolute; top: 0; right: 0; padding: 10px;" href="{% url 'view-single-result'%}?student={{ result.student.id }}&term={{ result.term.id }}&session={{ result.session.id }}">View Result</a>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th></th>
+              <th>Subject</th>
+              <th>Assignment Score</th>
+              <th>Test 1 Score</th>
+              <th>Test 2 Score</th>
+              <th>Test 3 Score</th>
+              <th>Exam Score</th>
+              <th>Total Score</th>
+              <th>Grade</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for subject in result.subjects %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ subject.subject }}</td>
+                <td>{{ subject.assignment_score }}</td>
+                <td>{{ subject.test1_score }}</td>
+                <td>{{ subject.test2_score }}</td>
+                <td>{{ subject.test3_score }}</td>
+                <td>{{ subject.exam_score }}</td>
+                <td>{{ subject.total_score }}</td>
+                <td>{{ subject.grade }}</td>
+                <td>{{ subject.remarks }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">Over All Evaluation:</td>
+              <td colspan="4"></td>
+              <td><a href="{% url 'add-comment'%}?student={{ result.student.id }}&term={{ result.term.id }}&session={{ result.session.id }}">Add Comment</a></td>
+              {% comment %} <td>{{ result.test_total }}</td>
+              <td>{{ result.exam_total }}</td> {% endcomment %}
+              <td>{{ result.total_total }}/100</td>
+              <td>{{ result.total_grade }}</td>
+              <td><a href="{% url 'edit-student-results'%}?student_ids={{ result.student.id }}&term={{ result.term.id }}&session={{ result.session.id }}">Edit Result</a></td>
+            </tr>
+          </tfoot>
+        </table>
+
+
+
+
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock fullcard %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block fullcard %}
+
+  <div class="card">
+    <div class="card-header">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group row">
+          <label class="col-2" for="id_session"><label for="result_class_id">Name:</label></label>
+          <div class="col">
+           <input type="text" value="{{student_name}}" name="student_name" class="form-control" readonly>
+           <input type="hidden" value="{{student_id}}" name="student_id" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Session:</label></label>
+            <div class="col">
+             <input type="text" value="{{student_result_session}}" name="session_name" class="form-control" readonly>
+             <input type="hidden" value="{{session_id}}" name="session_id" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Term:</label></label>
+            <div class="col">
+             <input type="text" value="{{student_result_term}}" name="term_name" class="form-control" readonly>
+             <input type="hidden" value="{{term_id}}" name="term_id" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Class:</label></label>
+            <div class="col">
+             <input type="text" value="{{student_class}}" name="class_name" class="form-control" readonly>
+             <input type="hidden" value="{{student_class_id}}" name="class_id" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Attendance:</label></label>
+            <div class="col">
+             <input type="text"name="attendance_made" value="{{attendance_made}}"  class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Personal Neatness:</label></label>
+            <div class="col">
+             <input type="text" name="neatness" value="{{neatness}}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Social & Personal Habits:</label></label>
+            <div class="col">
+             <input type="text" name="habits" value="{{habits}}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Class Teacher's Comments:</label></label>
+            <div class="col">
+             <input type="text" name="class_teacher_comment" value="{{class_teacher_comment}}" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2" for="id_session"><label for="result_class_id">Headteacher's Comments:</label></label>
+            <div class="col">
+             <input type="text" name="head_teacher_comment" value="{{head_teacher_comment}}"  class="form-control">
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock fullcard %}
